@@ -1,0 +1,103 @@
+-- ---
+-- ---
+-- Table 'source'
+-- A book information
+-- ---
+
+DROP TABLE IF EXISTS `source`;
+		
+CREATE TABLE `source` (
+  `id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
+  `caption` VARCHAR NULL DEFAULT NULL,
+  `id_author` INTEGER NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) COMMENT 'A book information';
+
+-- ---
+-- Table 'author'
+-- authors of books used
+-- ---
+
+DROP TABLE IF EXISTS `author`;
+		
+CREATE TABLE `author` (
+  `id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
+  `name` VARCHAR NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) COMMENT 'authors of books used';
+
+-- ---
+-- Table 'quote'
+-- 
+-- ---
+
+DROP TABLE IF EXISTS `quote`;
+		
+CREATE TABLE `quote` (
+  `id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
+  `text` MEDIUMTEXT NULL DEFAULT NULL,
+  `id_source` INTEGER NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+);
+
+-- ---
+-- Table 'tag'
+-- tags for quotes
+-- ---
+
+DROP TABLE IF EXISTS `tag`;
+		
+CREATE TABLE `tag` (
+  `id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
+  `tag` VARCHAR NULL DEFAULT NULL,
+  `rate` ENUM NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) COMMENT 'tags for quotes';
+
+-- ---
+-- Table 'quote_to_tag'
+-- 
+-- ---
+
+DROP TABLE IF EXISTS `quote_to_tag`;
+		
+CREATE TABLE `quote_to_tag` (
+  `id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
+  `id_quote` INTEGER NULL DEFAULT NULL,
+  `id_tag` INTEGER NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+);
+
+-- ---
+-- Foreign Keys 
+-- ---
+
+ALTER TABLE `source` ADD FOREIGN KEY (id_author) REFERENCES `author` (`id`);
+ALTER TABLE `quote` ADD FOREIGN KEY (id_source) REFERENCES `source` (`id`);
+ALTER TABLE `quote_to_tag` ADD FOREIGN KEY (id_quote) REFERENCES `quote` (`id`);
+ALTER TABLE `quote_to_tag` ADD FOREIGN KEY (id_tag) REFERENCES `tag` (`id`);
+
+-- ---
+-- Table Properties
+-- ---
+
+-- ALTER TABLE `source` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `author` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `quote` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `tag` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `quote_to_tag` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- ---
+-- Test Data
+-- ---
+
+-- INSERT INTO `source` (`id`,`caption`,`id_author`) VALUES
+-- ('','','');
+-- INSERT INTO `author` (`id`,`name`) VALUES
+-- ('','');
+-- INSERT INTO `quote` (`id`,`text`,`id_source`) VALUES
+-- ('','','');
+-- INSERT INTO `tag` (`id`,`tag`,`rate`) VALUES
+-- ('','','');
+-- INSERT INTO `quote_to_tag` (`id`,`id_quote`,`id_tag`) VALUES
+-- ('','','');
